@@ -6,6 +6,9 @@ import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
 import com.example.rafaelsavaris.noteapplicationmvp.notes.add.AddEditNoteActivity;
+import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.usecase.GetNotes;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseCallback;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,10 @@ import java.util.List;
 
 public class NotesPresenter implements NotesContract.Presenter {
 
+    private final UseCaseHandler mUseCaseHandler;
+
+    private final GetNotes mGetNotes;
+
     private final NotesRepository mRepository;
 
     private final NotesContract.View mView;
@@ -24,10 +31,12 @@ public class NotesPresenter implements NotesContract.Presenter {
 
     private boolean firstLoad = true;
 
-    public NotesPresenter(NotesRepository mRepository, NotesContract.View mView) {
-        this.mRepository = mRepository;
-        this.mView = mView;
-        this.mView.setPresenter(this);
+    public NotesPresenter(UseCaseHandler useCaseHandler, GetNotes getNotes, NotesRepository repository, NotesContract.View view) {
+        mUseCaseHandler = useCaseHandler;
+        mGetNotes = getNotes;
+        mRepository = repository;
+        mView = view;
+        mView.setPresenter(this);
     }
 
     public void setFilter(NotesFilterType mFilterType){
@@ -98,34 +107,14 @@ public class NotesPresenter implements NotesContract.Presenter {
             mView.setLoadingIndicator(true);
         }
 
-        if (forceUpdate){
-            mRepository.refreshNotes();
-        }
+        GetNotes.RequestValues requestValues = new GetNotes.RequestValues(forceUpdate, mFilterType);
 
-        mRepository.getNotes(new NotesDatasource.LoadNotesCallBack() {
+        mUseCaseHandler.execute(mGetNotes, requestValues, new UseCaseCallback<GetNotes.ResponseValue>() {
 
             @Override
-            public void onNotesLoaded(List<Note> notes) {
+            public void onSuccess(GetNotes.ResponseValue response) {
 
-                List<Note> notesToShow = new ArrayList<>();
-
-                for (Note note : notes){
-
-                    switch (mFilterType){
-
-                        case MARKED_NOTES:
-
-                            if(note.isMarked()){
-                                notesToShow.add(note);
-                            }
-
-                            break;
-
-                         default:
-                             notesToShow.add(note);
-                    }
-
-                }
+                List<Note> notes = response.getNotes();
 
                 if (!mView.isActive()){
                     return;
@@ -135,12 +124,12 @@ public class NotesPresenter implements NotesContract.Presenter {
                     mView.setLoadingIndicator(false);
                 }
 
-                processNotes(notesToShow);
+                processNotes(notes);
 
             }
 
             @Override
-            public void onDataNotAvailable() {
+            public void onError() {
 
                 if (!mView.isActive()){
                     return;
@@ -149,7 +138,6 @@ public class NotesPresenter implements NotesContract.Presenter {
                 mView.showLoadingNotesError();
 
             }
-
         });
 
     }

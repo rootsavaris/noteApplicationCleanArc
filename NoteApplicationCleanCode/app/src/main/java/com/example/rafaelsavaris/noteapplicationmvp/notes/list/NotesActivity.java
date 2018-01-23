@@ -42,7 +42,7 @@ public class NotesActivity extends AppCompatActivity {
 
         }
 
-        notesPresenter = new NotesPresenter(Injection.providesNotesRepository(this), notesFragment);
+        notesPresenter = new NotesPresenter(Injection.provideUseCasehandler(), Injection.provideGetNotes(getApplicationContext()), Injection.providesNotesRepository(this), notesFragment);
 
         if (savedInstanceState != null){
 
