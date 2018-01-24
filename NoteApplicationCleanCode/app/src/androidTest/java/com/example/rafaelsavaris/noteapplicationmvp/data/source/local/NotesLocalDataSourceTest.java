@@ -6,7 +6,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.example.rafaelsavaris.noteapplicationmvp.utils.SingleExecutor;
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 
 import org.junit.After;

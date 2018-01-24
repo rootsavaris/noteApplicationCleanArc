@@ -1,26 +1,20 @@
 package com.example.rafaelsavaris.noteapplicationmvp.notes.add;
 
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.detail.DetailNoteContract;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.detail.DetailNotePresenter;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InOrder;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyVararg;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

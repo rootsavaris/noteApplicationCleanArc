@@ -1,9 +1,8 @@
 package com.example.rafaelsavaris.noteapplicationmvp.data.source.remote;
 
-import android.os.Handler;
 import android.support.annotation.VisibleForTesting;
 
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.google.common.collect.Lists;
 

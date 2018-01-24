@@ -1,21 +1,10 @@
 package com.example.rafaelsavaris.noteapplicationmvp.data.source.local;
 
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.utils.AppExecutors;
-import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Handler;
-import java.util.logging.LogRecord;
 
 /**
  * Created by rafael.savaris on 18/10/2017.

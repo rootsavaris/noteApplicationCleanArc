@@ -1,12 +1,8 @@
 package com.example.rafaelsavaris.noteapplicationmvp.notes.detail;
 
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.NotesContract;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.NotesFilterType;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.NotesPresenter;
-import com.google.common.collect.Lists;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +12,6 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
-import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.any;

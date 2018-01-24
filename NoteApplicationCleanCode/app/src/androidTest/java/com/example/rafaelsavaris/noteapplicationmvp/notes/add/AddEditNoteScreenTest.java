@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.rafaelsavaris.noteapplicationmvp.R;
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.remote.MockRemoteDataSource;
 import com.example.rafaelsavaris.noteapplicationmvp.utils.TestUtils;
 

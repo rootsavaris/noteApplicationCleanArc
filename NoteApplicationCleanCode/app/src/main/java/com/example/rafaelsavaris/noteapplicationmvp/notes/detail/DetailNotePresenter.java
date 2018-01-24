@@ -1,6 +1,6 @@
 package com.example.rafaelsavaris.noteapplicationmvp.notes.detail;
 
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
 import com.google.common.base.Strings;

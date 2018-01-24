@@ -1,13 +1,11 @@
-package com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.usecase;
+package com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action;
 
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
 import com.example.rafaelsavaris.noteapplicationmvp.notes.list.NotesFilterType;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.filter.FilterFactory;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.filter.NoteFilter;
-import com.example.rafaelsavaris.noteapplicationmvp.usecase.RequestValues;
-import com.example.rafaelsavaris.noteapplicationmvp.usecase.ResponseValue;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.filter.FilterFactory;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.filter.NoteFilter;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCase;
 
 import java.util.List;

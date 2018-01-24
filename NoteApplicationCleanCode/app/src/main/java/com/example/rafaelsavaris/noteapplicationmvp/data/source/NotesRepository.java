@@ -1,6 +1,6 @@
 package com.example.rafaelsavaris.noteapplicationmvp.data.source;
 
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,10 +1,8 @@
 package com.example.rafaelsavaris.noteapplicationmvp.notes.list;
 
-import android.content.Intent;
-
 import com.example.rafaelsavaris.noteapplicationmvp.BasePresenter;
 import com.example.rafaelsavaris.noteapplicationmvp.BaseView;
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 
 import java.util.List;
 

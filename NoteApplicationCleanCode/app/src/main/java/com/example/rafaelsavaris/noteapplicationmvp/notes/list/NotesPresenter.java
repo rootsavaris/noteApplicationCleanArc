@@ -2,15 +2,15 @@ package com.example.rafaelsavaris.noteapplicationmvp.notes.list;
 
 import android.app.Activity;
 
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
-import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
-import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
+import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.ClearMarkedNotes;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.notes.add.AddEditNoteActivity;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.usecase.GetNotes;
+import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.GetNotes;
+import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.MarkNote;
+import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.UnMarkNote;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseCallback;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +23,11 @@ public class NotesPresenter implements NotesContract.Presenter {
 
     private final GetNotes mGetNotes;
 
-    private final NotesRepository mRepository;
+    private final MarkNote mMarkNote;
+
+    private final UnMarkNote mUnMarkNote;
+
+    private final ClearMarkedNotes mClearMarkedNotes;
 
     private final NotesContract.View mView;
 
@@ -31,10 +35,12 @@ public class NotesPresenter implements NotesContract.Presenter {
 
     private boolean firstLoad = true;
 
-    public NotesPresenter(UseCaseHandler useCaseHandler, GetNotes getNotes, NotesRepository repository, NotesContract.View view) {
+    public NotesPresenter(UseCaseHandler useCaseHandler, GetNotes getNotes, MarkNote markNote, UnMarkNote unMarkNote, ClearMarkedNotes clearMarkedNotes, NotesContract.View view) {
         mUseCaseHandler = useCaseHandler;
         mGetNotes = getNotes;
-        mRepository = repository;
+        mMarkNote = markNote;
+        mUnMarkNote = unMarkNote;
+        mClearMarkedNotes = clearMarkedNotes;
         mView = view;
         mView.setPresenter(this);
     }
@@ -72,23 +78,65 @@ public class NotesPresenter implements NotesContract.Presenter {
 
     @Override
     public void markNote(Note markedNote) {
-        mRepository.markNote(markedNote);
-        mView.showNoteMarked();
-        loadNotes(false, false);
+
+        MarkNote.RequestValues requestValues = new MarkNote.RequestValues(markedNote.getId());
+
+        mUseCaseHandler.execute(mMarkNote, requestValues, new UseCaseCallback<MarkNote.ResponseValue>() {
+
+            @Override
+            public void onSuccess(MarkNote.ResponseValue response) {
+
+                mView.showNoteMarked();
+                loadNotes(false, false);
+
+            }
+
+            @Override
+            public void onError() {
+                mView.showLoadingNotesError();
+            }
+        });
+
     }
 
     @Override
     public void unMarkNote(Note markedNote) {
-        mRepository.unMarkNote(markedNote);
-        mView.showNoteUnMarked();
-        loadNotes(false, false);
+
+        UnMarkNote.RequestValues requestValues = new UnMarkNote.RequestValues(markedNote.getId());
+
+        mUseCaseHandler.execute(mUnMarkNote, requestValues, new UseCaseCallback<UnMarkNote.ResponseValue>() {
+
+            @Override
+            public void onSuccess(UnMarkNote.ResponseValue response) {
+                mView.showNoteUnMarked();
+                loadNotes(false, false);
+            }
+
+            @Override
+            public void onError() {
+                mView.showLoadingNotesError();
+            }
+
+        });
+
     }
 
     @Override
     public void clearMarkedNotes() {
-        mRepository.clearMarkedNotes();
-        mView.showNotesCleared();
-        loadNotes(false, false);
+
+        mUseCaseHandler.execute(mClearMarkedNotes, new ClearMarkedNotes.RequestValues(), new UseCaseCallback<ClearMarkedNotes.ResponseValue>() {
+            @Override
+            public void onSuccess(ClearMarkedNotes.ResponseValue response) {
+                mView.showNotesCleared();
+                loadNotes(false, false);
+            }
+
+            @Override
+            public void onError() {
+                mView.showLoadingNotesError();
+            }
+        });
+
     }
 
     @Override

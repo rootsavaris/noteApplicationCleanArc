@@ -1,4 +1,4 @@
-package com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.filter;
+package com.example.rafaelsavaris.noteapplicationmvp.usecase.filter;
 
 import com.example.rafaelsavaris.noteapplicationmvp.notes.list.NotesFilterType;
 

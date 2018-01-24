@@ -23,7 +23,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.rafaelsavaris.noteapplicationmvp.R;
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.notes.add.AddEditNoteActivity;
 import com.example.rafaelsavaris.noteapplicationmvp.notes.detail.DetailNoteActivity;
 

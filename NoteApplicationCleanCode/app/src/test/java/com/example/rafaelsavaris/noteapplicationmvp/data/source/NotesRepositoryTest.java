@@ -1,6 +1,6 @@
 package com.example.rafaelsavaris.noteapplicationmvp.data.source;
 
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.google.common.collect.Lists;
 
 import org.junit.After;

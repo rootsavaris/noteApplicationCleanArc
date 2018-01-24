@@ -1,4 +1,4 @@
-package com.example.rafaelsavaris.noteapplicationmvp.data.model;
+package com.example.rafaelsavaris.noteapplicationmvp.usecase.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

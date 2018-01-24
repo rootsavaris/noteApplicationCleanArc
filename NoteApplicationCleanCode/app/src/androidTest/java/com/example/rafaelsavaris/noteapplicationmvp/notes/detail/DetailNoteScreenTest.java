@@ -1,30 +1,21 @@
 package com.example.rafaelsavaris.noteapplicationmvp.notes.detail;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.example.rafaelsavaris.noteapplicationmvp.R;
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.remote.MockRemoteDataSource;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.add.AddEditNoteActivity;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.add.AddEditNoteFragment;
 import com.example.rafaelsavaris.noteapplicationmvp.utils.TestUtils;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;

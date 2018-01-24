@@ -4,7 +4,7 @@ import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.rafaelsavaris.noteapplicationmvp.data.model.Note;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 
 import org.junit.After;
 import org.junit.Before;
