@@ -47,7 +47,11 @@ public class DetailNoteActivity extends AppCompatActivity {
 
         new DetailNotePresenter(
                 noteId,
-                Injection.providesNotesRepository(getApplicationContext()),
+                Injection.provideUseCasehandler(),
+                Injection.provideGetNote(getApplicationContext()),
+                Injection.provideMarkNote(getApplicationContext()),
+                Injection.provideUnMarkNote(getApplicationContext()),
+                Injection.provideDeleteNote(getApplicationContext()),
                 detailNoteFragment);
 
     }

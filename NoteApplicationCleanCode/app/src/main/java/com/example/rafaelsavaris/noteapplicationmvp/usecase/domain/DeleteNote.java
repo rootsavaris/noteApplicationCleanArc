@@ -1,26 +1,25 @@
-package com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action;
+package com.example.rafaelsavaris.noteapplicationmvp.usecase.domain;
 
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCase;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 
 /**
  * Created by rafael.savaris on 23/01/2018.
  */
 
-public class UnMarkNote extends UseCase<UnMarkNote.RequestValues, UnMarkNote.ResponseValue> {
+public class DeleteNote extends UseCase<DeleteNote.RequestValues, DeleteNote.ResponseValue> {
 
     public final NotesRepository mNotesRepository;
 
-    public UnMarkNote(NotesRepository notesRepository) {
+    public DeleteNote(NotesRepository notesRepository) {
         this.mNotesRepository = notesRepository;
     }
 
     @Override
     protected void executeUseCase(final RequestValues requestValues) {
 
-        String noteId = requestValues.getNoteId();
-
-        mNotesRepository.unMarkNote(noteId);
+        mNotesRepository.deleteNote(requestValues.getNoteId());
 
         getUseCaseCallback().onSuccess(new ResponseValue());
 
@@ -39,6 +38,7 @@ public class UnMarkNote extends UseCase<UnMarkNote.RequestValues, UnMarkNote.Res
         }
     }
 
-    public static final class ResponseValue implements com.example.rafaelsavaris.noteapplicationmvp.usecase.ResponseValue{}
+    public static final class ResponseValue implements com.example.rafaelsavaris.noteapplicationmvp.usecase.ResponseValue{
+    }
 
 }

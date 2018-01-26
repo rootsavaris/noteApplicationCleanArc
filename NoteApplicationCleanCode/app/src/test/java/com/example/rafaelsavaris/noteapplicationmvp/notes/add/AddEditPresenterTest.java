@@ -1,5 +1,10 @@
 package com.example.rafaelsavaris.noteapplicationmvp.notes.add;
 
+import com.example.rafaelsavaris.noteapplicationmvp.notes.UseCaseSchedulerTest;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseHandler;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.CreateNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.GetNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.UpdateNote;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
@@ -53,7 +58,7 @@ public class AddEditPresenterTest {
     @Test
     public void createPresenter_setsThePresenterToView(){
 
-        mAddEditNotePresenter = new AddEditNotePresenter(null, mNotesRepository, mView, true);
+        mAddEditNotePresenter = getPresenter(null);
 
         verify(mView).setPresenter(mAddEditNotePresenter);
 
@@ -62,7 +67,7 @@ public class AddEditPresenterTest {
     @Test
     public void saveNewNoteToRepository_showsSuccessMessageUi(){
 
-        mAddEditNotePresenter = new AddEditNotePresenter(null, mNotesRepository, mView, true);
+        mAddEditNotePresenter = getPresenter("1");
 
         mAddEditNotePresenter.saveNote(TITLE, TEXT);
 
@@ -75,7 +80,7 @@ public class AddEditPresenterTest {
     @Test
     public void saveNote_emptyNoteShowsErrorUi(){
 
-        mAddEditNotePresenter = new AddEditNotePresenter(null, mNotesRepository, mView, true);
+        mAddEditNotePresenter = getPresenter("1");
 
         mAddEditNotePresenter.saveNote("", "");
 
@@ -86,7 +91,7 @@ public class AddEditPresenterTest {
     @Test
     public void saveExistingNoteToRepository_showsSuccessMessageUi(){
 
-        mAddEditNotePresenter = new AddEditNotePresenter(EXISTING_ID, mNotesRepository, mView, true);
+        mAddEditNotePresenter = getPresenter(EXISTING_ID);
 
         mAddEditNotePresenter.saveNote(TITLE, TEXT);
 
@@ -101,7 +106,7 @@ public class AddEditPresenterTest {
 
         Note note = new Note(TITLE, TEXT);
 
-        mAddEditNotePresenter = new AddEditNotePresenter(note.getId(), mNotesRepository, mView, true);
+        mAddEditNotePresenter = getPresenter(note.getId());
 
         mAddEditNotePresenter.populateNote();
 
@@ -116,6 +121,20 @@ public class AddEditPresenterTest {
         verify(mView).setText(note.getText());
 
         assertThat(mAddEditNotePresenter.isDataMissing(), is(false));
+
+    }
+
+    private AddEditNotePresenter getPresenter(String noteId){
+
+        UseCaseHandler useCaseHandler = new UseCaseHandler(new UseCaseSchedulerTest());
+
+        GetNote getNote = new GetNote(mNotesRepository);
+
+        CreateNote createNote = new CreateNote(mNotesRepository);
+
+        UpdateNote updateNote = new UpdateNote(mNotesRepository);
+
+        return new AddEditNotePresenter(null, useCaseHandler, getNote, createNote, updateNote, mView, true);
 
     }
 

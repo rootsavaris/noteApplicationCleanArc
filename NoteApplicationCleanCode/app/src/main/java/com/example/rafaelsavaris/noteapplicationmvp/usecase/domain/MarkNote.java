@@ -1,4 +1,4 @@
-package com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action;
+package com.example.rafaelsavaris.noteapplicationmvp.usecase.domain;
 
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCase;

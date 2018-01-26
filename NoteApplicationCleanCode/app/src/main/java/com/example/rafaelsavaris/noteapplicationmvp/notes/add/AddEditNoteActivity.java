@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.rafaelsavaris.noteapplicationmvp.Injection;
 import com.example.rafaelsavaris.noteapplicationmvp.R;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.add.domain.action.GetNote;
 import com.example.rafaelsavaris.noteapplicationmvp.utils.ActivityUtils;
 
 /**
@@ -64,7 +63,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
                 Injection.provideUseCasehandler(),
                 Injection.provideGetNote(getApplicationContext()),
                 Injection.provideCreateNote(getApplicationContext()),
-                Injection.providesNotesRepository(getApplicationContext()),
+                Injection.provideUpdateNote(getApplicationContext()),
                 addEditNoteFragment,
                 shouldLoadDataFromRepo);
 

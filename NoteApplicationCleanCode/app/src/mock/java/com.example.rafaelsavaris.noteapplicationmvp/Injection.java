@@ -1,20 +1,20 @@
 package com.example.rafaelsavaris.noteapplicationmvp;
 
-import android.arch.persistence.room.Update;
 import android.content.Context;
 
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.local.NoteDatabase;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.local.NotesLocalDataSource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.remote.MockRemoteDataSource;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.add.domain.action.CreateNote;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.add.domain.action.GetNote;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.add.domain.action.UpdateNote;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.ClearMarkedNotes;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.CreateNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.DeleteNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.GetNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.UpdateNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.ClearMarkedNotes;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.filter.FilterFactory;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.GetNotes;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.MarkNote;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.UnMarkNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.GetNotes;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.MarkNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.UnMarkNote;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseHandler;
 import com.example.rafaelsavaris.noteapplicationmvp.utils.AppExecutors;
 
@@ -62,6 +62,10 @@ public class Injection {
 
     public static UpdateNote provideUpdateNote(Context context){
         return new UpdateNote(providesNotesRepository(context));
+    }
+
+    public static DeleteNote provideDeleteNote(Context context){
+        return new DeleteNote(providesNotesRepository(context));
     }
 
 

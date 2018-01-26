@@ -1,5 +1,13 @@
 package com.example.rafaelsavaris.noteapplicationmvp.notes.detail;
 
+import com.example.rafaelsavaris.noteapplicationmvp.notes.UseCaseSchedulerTest;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseHandler;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.CreateNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.DeleteNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.GetNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.MarkNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.UnMarkNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.UpdateNote;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
@@ -55,7 +63,7 @@ public class DetailNotePresenterTest {
     @Test
     public void createPresenter_setsThePresenterToView(){
 
-        mDetailNotePresenter = new DetailNotePresenter(NOTE.getId(), mNotesRepository, mView);
+        mDetailNotePresenter = getPresenter(NOTE.getId());
 
         verify(mView).setPresenter(mDetailNotePresenter);
 
@@ -64,7 +72,7 @@ public class DetailNotePresenterTest {
     @Test
     public void getNoteFromRepositoryAndLoadIntoView(){
 
-        mDetailNotePresenter = new DetailNotePresenter(NOTE.getId(), mNotesRepository, mView);
+        mDetailNotePresenter = getPresenter(NOTE.getId());
 
         mDetailNotePresenter.start();
 
@@ -89,7 +97,7 @@ public class DetailNotePresenterTest {
     @Test
     public void getMarkedNoteFromRepositoryAndLoadIntoView(){
 
-        mDetailNotePresenter = new DetailNotePresenter(MARKED_NOTE.getId(), mNotesRepository, mView);
+        mDetailNotePresenter = getPresenter(MARKED_NOTE.getId());
 
         mDetailNotePresenter.start();
 
@@ -113,7 +121,7 @@ public class DetailNotePresenterTest {
     @Test
     public void getUnknownNoteFromRepositoryAndLoadIntoView(){
 
-        mDetailNotePresenter = new DetailNotePresenter(INVALID_ID, mNotesRepository, mView);
+        mDetailNotePresenter = getPresenter(INVALID_ID);
 
         mDetailNotePresenter.start();
 
@@ -124,7 +132,7 @@ public class DetailNotePresenterTest {
     @Test
     public void deleteNote(){
 
-        mDetailNotePresenter = new DetailNotePresenter(NOTE.getId(), mNotesRepository, mView);
+        mDetailNotePresenter = getPresenter(NOTE.getId());
 
         mDetailNotePresenter.deleteNote();
 
@@ -137,7 +145,7 @@ public class DetailNotePresenterTest {
     @Test
     public void markNote(){
 
-        mDetailNotePresenter = new DetailNotePresenter(NOTE.getId(), mNotesRepository, mView);
+        mDetailNotePresenter = getPresenter(NOTE.getId());
 
         mDetailNotePresenter.start();
 
@@ -152,7 +160,7 @@ public class DetailNotePresenterTest {
     @Test
     public void unMarkNote(){
 
-        mDetailNotePresenter = new DetailNotePresenter(NOTE.getId(), mNotesRepository, mView);
+        mDetailNotePresenter = getPresenter(NOTE.getId());
 
         mDetailNotePresenter.start();
 
@@ -168,7 +176,7 @@ public class DetailNotePresenterTest {
     @Test
     public void showNoteWhenEditing(){
 
-        mDetailNotePresenter = new DetailNotePresenter(NOTE.getId(), mNotesRepository, mView);
+        mDetailNotePresenter = getPresenter(NOTE.getId());
 
         mDetailNotePresenter.editNote();
 
@@ -179,13 +187,29 @@ public class DetailNotePresenterTest {
     @Test
     public void invalidNoteIsNotShowWhenEditing(){
 
-        mDetailNotePresenter = new DetailNotePresenter(INVALID_ID, mNotesRepository, mView);
+        mDetailNotePresenter = getPresenter(INVALID_ID);
 
         mDetailNotePresenter.editNote();
 
         verify(mView, never()).showEditNote(INVALID_ID);
 
         verify(mView).showMissingNote();
+
+    }
+
+    private DetailNotePresenter getPresenter(String noteId){
+
+        UseCaseHandler useCaseHandler = new UseCaseHandler(new UseCaseSchedulerTest());
+
+        GetNote getNote = new GetNote(mNotesRepository);
+
+        MarkNote markNote = new MarkNote(mNotesRepository);
+
+        UnMarkNote unMarkNote = new UnMarkNote(mNotesRepository);
+
+        DeleteNote deleteNote = new DeleteNote(mNotesRepository);
+
+        return new DetailNotePresenter(noteId, useCaseHandler, getNote, markNote, unMarkNote, deleteNote, mView);
 
     }
 

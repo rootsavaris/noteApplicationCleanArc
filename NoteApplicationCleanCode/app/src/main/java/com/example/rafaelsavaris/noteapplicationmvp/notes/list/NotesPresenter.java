@@ -2,12 +2,12 @@ package com.example.rafaelsavaris.noteapplicationmvp.notes.list;
 
 import android.app.Activity;
 
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.ClearMarkedNotes;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.ClearMarkedNotes;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.notes.add.AddEditNoteActivity;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.GetNotes;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.MarkNote;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.domain.action.UnMarkNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.GetNotes;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.MarkNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.UnMarkNote;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseCallback;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseHandler;
 

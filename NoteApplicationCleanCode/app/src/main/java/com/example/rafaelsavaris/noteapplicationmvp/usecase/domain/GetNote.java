@@ -1,14 +1,9 @@
-package com.example.rafaelsavaris.noteapplicationmvp.notes.add.domain.action;
+package com.example.rafaelsavaris.noteapplicationmvp.usecase.domain;
 
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.list.NotesFilterType;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCase;
-import com.example.rafaelsavaris.noteapplicationmvp.usecase.filter.FilterFactory;
-import com.example.rafaelsavaris.noteapplicationmvp.usecase.filter.NoteFilter;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
-
-import java.util.List;
 
 /**
  * Created by rafael.savaris on 23/01/2018.

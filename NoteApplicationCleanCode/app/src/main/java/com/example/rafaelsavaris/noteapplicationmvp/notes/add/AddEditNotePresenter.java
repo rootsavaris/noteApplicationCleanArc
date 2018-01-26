@@ -1,13 +1,11 @@
 package com.example.rafaelsavaris.noteapplicationmvp.notes.add;
 
-import com.example.rafaelsavaris.noteapplicationmvp.notes.add.domain.action.CreateNote;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.add.domain.action.GetNote;
-import com.example.rafaelsavaris.noteapplicationmvp.notes.add.domain.action.UpdateNote;
-import com.example.rafaelsavaris.noteapplicationmvp.usecase.ResponseValue;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.CreateNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.GetNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.UpdateNote;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseCallback;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseHandler;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
-import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 
 /**
  * Created by rafael.savaris on 01/12/2017.
@@ -16,8 +14,6 @@ import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 public class AddEditNotePresenter implements AddEditNoteContract.Presenter{
 
     private boolean mIsMarked = false;
-
-    private final NotesDatasource mNotesRepository;
 
     private final AddEditNoteContract.View mView;
 
@@ -33,13 +29,12 @@ public class AddEditNotePresenter implements AddEditNoteContract.Presenter{
 
     private final UpdateNote mUpdateNote;
 
-    public AddEditNotePresenter(String noteId, UseCaseHandler useCaseHandler, GetNote getNote, CreateNote createNote, UpdateNote updateNote, NotesDatasource notesDatasource, AddEditNoteContract.View view, boolean shouldLoadDataFromRepo) {
+    public AddEditNotePresenter(String noteId, UseCaseHandler useCaseHandler, GetNote getNote, CreateNote createNote, UpdateNote updateNote, AddEditNoteContract.View view, boolean shouldLoadDataFromRepo) {
         mNoteId = noteId;
         mUseCaseHandler = useCaseHandler;
         mGetNote = getNote;
         mCreateNote = createNote;
         mUpdateNote = updateNote;
-        mNotesRepository = notesDatasource;
         mView = view;
         mIsDataMissing = shouldLoadDataFromRepo;
 
@@ -133,9 +128,17 @@ public class AddEditNotePresenter implements AddEditNoteContract.Presenter{
 
     private void updateNote(String title, String text){
 
-        mNotesRepository.saveNote(new Note(title, text, mNoteId, mIsMarked));
+        Note note = new Note(title, text, mNoteId, mIsMarked);
 
-        mView.showNotesList();
+        mUseCaseHandler.execute(mUpdateNote, new UpdateNote.RequestValues(note), new UseCaseCallback<UpdateNote.ResponseValue>() {
+            @Override
+            public void onSuccess(UpdateNote.ResponseValue response) {
+                mView.showNotesList();
+            }
+
+            @Override
+            public void onError() {}
+        });
 
     }
 

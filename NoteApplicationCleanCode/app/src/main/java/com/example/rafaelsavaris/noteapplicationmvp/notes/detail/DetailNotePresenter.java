@@ -1,5 +1,12 @@
 package com.example.rafaelsavaris.noteapplicationmvp.notes.detail;
 
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.ResponseValue;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseCallback;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.DeleteNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.GetNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseHandler;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.MarkNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.UnMarkNote;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
@@ -13,13 +20,25 @@ public class DetailNotePresenter implements DetailNoteContract.Presenter {
 
     private String mNoteId;
 
-    private final NotesRepository mNotesRepository;
-
     private final DetailNoteContract.View mView;
 
-    public DetailNotePresenter(String noteId, NotesRepository notesRepository, DetailNoteContract.View view) {
+    private final UseCaseHandler mUseCaseHandler;
+
+    private final GetNote mGetNote;
+
+    private final MarkNote mMarkNote;
+
+    private final UnMarkNote mUnMarkNote;
+
+    private final DeleteNote mDeleteNote;
+
+    public DetailNotePresenter(String noteId, UseCaseHandler useCaseHandler, GetNote getNote, MarkNote markNote, UnMarkNote unMarkNote, DeleteNote deleteNote, DetailNoteContract.View view) {
         mNoteId = noteId;
-        mNotesRepository = notesRepository;
+        mUseCaseHandler = useCaseHandler;
+        mGetNote = getNote;
+        mMarkNote = markNote;
+        mUnMarkNote = unMarkNote;
+        mDeleteNote = deleteNote;
         mView = view;
 
         mView.setPresenter(this);
@@ -34,16 +53,19 @@ public class DetailNotePresenter implements DetailNoteContract.Presenter {
         }
 
         mView.setLoadingIndicator(true);
-        mNotesRepository.getNote(mNoteId, new NotesDatasource.GetNoteCallBack() {
+
+        mUseCaseHandler.execute(mGetNote, new GetNote.RequestValues(mNoteId), new UseCaseCallback<GetNote.ResponseValue>() {
 
             @Override
-            public void onNoteLoaded(Note note) {
+            public void onSuccess(GetNote.ResponseValue response) {
 
                 if (!mView.isActive()){
                     return;
                 }
 
                 mView.setLoadingIndicator(false);
+
+                Note note = response.getNote();
 
                 if (note == null){
                     mView.showMissingNote();
@@ -54,7 +76,7 @@ public class DetailNotePresenter implements DetailNoteContract.Presenter {
             }
 
             @Override
-            public void onDataNotAvailable() {
+            public void onError() {
 
                 if (!mView.isActive()){
                     return;
@@ -109,9 +131,16 @@ public class DetailNotePresenter implements DetailNoteContract.Presenter {
             return;
         }
 
-        mNotesRepository.markNote(mNoteId);
+        mUseCaseHandler.execute(mMarkNote, new MarkNote.RequestValues(mNoteId), new UseCaseCallback<MarkNote.ResponseValue>() {
+            @Override
+            public void onSuccess(MarkNote.ResponseValue response) {
+                mView.showNoteMarked();
+            }
 
-        mView.showNoteMarked();
+            @Override
+            public void onError() {
+            }
+        });
 
     }
 
@@ -123,9 +152,17 @@ public class DetailNotePresenter implements DetailNoteContract.Presenter {
             return;
         }
 
-        mNotesRepository.unMarkNote(mNoteId);
+        mUseCaseHandler.execute(mUnMarkNote, new UnMarkNote.RequestValues(mNoteId), new UseCaseCallback<UnMarkNote.ResponseValue>() {
+            @Override
+            public void onSuccess(UnMarkNote.ResponseValue response) {
+                mView.showNoteUnMarked();
+            }
 
-        mView.showNoteUnMarked();
+            @Override
+            public void onError() {
+
+            }
+        });
 
     }
 
@@ -137,9 +174,17 @@ public class DetailNotePresenter implements DetailNoteContract.Presenter {
             return;
         }
 
-        mNotesRepository.deleteNote(mNoteId);
+        mUseCaseHandler.execute(mDeleteNote, new DeleteNote.RequestValues(mNoteId), new UseCaseCallback<DeleteNote.ResponseValue>() {
+            @Override
+            public void onSuccess(DeleteNote.ResponseValue response) {
+                mView.showNoteDeleted();
+            }
 
-        mView.showNoteDeleted();
+            @Override
+            public void onError() {
+
+            }
+        });
 
     }
 

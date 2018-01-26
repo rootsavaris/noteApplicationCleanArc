@@ -10,7 +10,7 @@ public class UseCaseHandler {
 
     private final UseCaseScheduler mUseCaseScheduler;
 
-    private UseCaseHandler(UseCaseScheduler useCaseScheduler){
+    public UseCaseHandler(UseCaseScheduler useCaseScheduler){
         mUseCaseScheduler = useCaseScheduler;
     }
 
