@@ -1,5 +1,12 @@
 package com.example.rafaelsavaris.noteapplicationmvp.notes.list;
 
+import com.example.rafaelsavaris.noteapplicationmvp.notes.UseCaseSchedulerTest;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.UseCaseHandler;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.ClearMarkedNotes;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.GetNotes;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.MarkNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.domain.UnMarkNote;
+import com.example.rafaelsavaris.noteapplicationmvp.usecase.filter.FilterFactory;
 import com.example.rafaelsavaris.noteapplicationmvp.usecase.model.Note;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesDatasource;
 import com.example.rafaelsavaris.noteapplicationmvp.data.source.NotesRepository;
@@ -18,6 +25,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -54,7 +62,7 @@ public class NotesPresenterTest {
 
         MockitoAnnotations.initMocks(this);
 
-        mNotesPresenter = new NotesPresenter(mNotesRepository, mView);
+        mNotesPresenter = getPresenter();
 
         when(mView.isActive()).thenReturn(true);
 
@@ -63,7 +71,7 @@ public class NotesPresenterTest {
     @Test
     public void createPresenter_setsThePresenterToView(){
 
-        mNotesPresenter = new NotesPresenter(mNotesRepository, mView);
+        mNotesPresenter = getPresenter();
 
         verify(mView).setPresenter(mNotesPresenter);
 
@@ -142,7 +150,7 @@ public class NotesPresenterTest {
 
         mNotesPresenter.markNote(note);
 
-        verify(mNotesRepository).markNote(note);
+        verify(mNotesRepository).markNote(eq(note.getId()));
 
         verify(mView).showNoteMarked();
 
@@ -155,7 +163,7 @@ public class NotesPresenterTest {
 
         mNotesPresenter.unMarkNote(note);
 
-        verify(mNotesRepository).unMarkNote(note);
+        verify(mNotesRepository).unMarkNote(eq(note.getId()));
 
         verify(mView).showNoteUnMarked();
 
@@ -176,6 +184,23 @@ public class NotesPresenterTest {
         verify(mView).showLoadingNotesError();
 
     }
+
+    private NotesPresenter getPresenter(){
+
+        UseCaseHandler useCaseHandler = new UseCaseHandler(new UseCaseSchedulerTest());
+
+        GetNotes getNotes = new GetNotes(mNotesRepository, new FilterFactory());
+
+        MarkNote markNote = new MarkNote(mNotesRepository);
+
+        UnMarkNote unMarkNote = new UnMarkNote(mNotesRepository);
+
+        ClearMarkedNotes clearMarkedNotes = new ClearMarkedNotes(mNotesRepository);
+
+        return new NotesPresenter(useCaseHandler, getNotes, markNote, unMarkNote, clearMarkedNotes, mView);
+
+    }
+
 
 
 }
